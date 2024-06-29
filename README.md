@@ -1,4 +1,5 @@
 # zipcode-lookup
+[![Node.js CI](https://github.com/reallymello/zipcode-lookup/actions/workflows/node.js.yml/badge.svg)](https://github.com/reallymello/zipcode-lookup/actions/workflows/node.js.yml)
 
 Given a US Zip Code, this program returns the associated State, County, City, and other useful information; latitude, longitude, density, population, military designation, timezone.
 
