@@ -22,7 +22,12 @@ import ZipCodeMapper from './models/ZipCodeMapper';
 //     });
 // }
 
-export function zip(zipCode: string) {
+/**
+ * Returns a ZipCode object for the provided 5 character zip code
+ * @param zipCode 5 digit zip code as a string
+ * @returns ZipCode object matching the desired string or null if no match was found
+ */
+export function zip(zipCode: string): ZipCode | null {
   const result = zipCodes.find((zip) => zip.zip === zipCode);
 
   if (result) {
@@ -32,11 +37,21 @@ export function zip(zipCode: string) {
   }
 }
 
+/**
+ * Returns a random ZipCode object. Useful for software tests requiring random, but valid data.
+ * @returns ZipCode
+ */
 export function random(): ZipCode {
   const rZip = zipCodes[Math.floor(Math.random() * zipCodes.length)];
   return new ZipCode(rZip);
 }
 
+/**
+ * An array of ZipCode objects matching the provided search parameters
+ * @param param0
+ * @returns ZipCode[]
+ * @example .searchBy(stateAbbreviation: 'FL', county: 'Broward', population: 20000, populationOperator: '<')
+ */
 export function searchBy({ ...searchOptions }: ISearchParams) {
   const populationComparisonOperator =
     searchOptions.populationOperator ?? searchOptions.populationOperator;
