@@ -1,4 +1,4 @@
-# zipcode-lookup
+# zipcode-detail-lookup
 
 [![Build Status](https://github.com/reallymello/zipcode-lookup/actions/workflows/node.js.yml/badge.svg)](https://github.com/reallymello/zipcode-lookup/actions/workflows/node.js.yml)
 
