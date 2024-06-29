@@ -2,39 +2,22 @@ import { ISearchParams } from './models/ISearchParams';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
 import _ from 'lodash';
+var csv = require('csvtojson');
+import fs from 'fs';
 
-// var csv = require('csvtojson');
-// import fs from 'fs';
+function writeCsvToTsArray(sourceCsv = './zip-source-files/uszips.csv') {
+  csv()
+    .fromFile(sourceCsv)
+    .then(function (jsonArrayObj: any) {
+      // console.log(jsonArrayObj);
+      const zipCodeArray = jsonArrayObj.map((zip: any) => new ZipCode(zip));
 
-// let message: string = 'Hello World';
-// console.log(message);
-
-// console.log(zipCodes[0].zip);
-
-// csv()
-//   .fromFile('./zip-source-files/uszips.csv')
-//   .then(function (jsonArrayObj: any) {
-//     //when parse finished, result will be emitted here.
-//     console.log(jsonArrayObj);
-
-//     fs.writeFileSync(
-//       './us-zip-codes1.ts',
-//       JSON.stringify(jsonArrayObj, null, 2)
-//     );
-//   });
-
-// csv()
-//   .fromFile('./zip-source-files/uszips.csv')
-//   .then(function (jsonArrayObj: any) {
-//     //when parse finished, result will be emitted here.
-//     console.log(jsonArrayObj);
-//     const zipCodeArray = jsonArrayObj.map((zip: any) => new ZipCode(zip));
-
-//     fs.writeFileSync(
-//       './us-zip-codes1.ts',
-//       JSON.stringify(zipCodeArray, null, 2)
-//     );
-//   });
+      fs.writeFileSync(
+        './us-zip-codes1.ts',
+        JSON.stringify(zipCodeArray, null, 2)
+      );
+    });
+}
 
 export function zip(zipCode: string) {
   const result = zipCodes.find((zip) => zip.zip === zipCode);
@@ -86,12 +69,3 @@ export function searchBy({ ...searchOptions }: ISearchParams) {
     }
   });
 }
-
-// console.log(
-//   searchBy({
-//     city: 'Coral Springs',
-//     county: 'Broward',
-//     population: 60000,
-//     populationOperator: '>',
-//   })
-// );
