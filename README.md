@@ -1,6 +1,6 @@
 # zipcode-detail-lookup
 
-[![Build Status](https://github.com/reallymello/zipcode-lookup/actions/workflows/node.js.yml/badge.svg)](https://github.com/reallymello/zipcode-lookup/actions/workflows/node.js.yml)
+[![Build Status](https://github.com/reallymello/zipcode-detail-lookup/actions/workflows/node.js.yml/badge.svg)](https://github.com/reallymello/zipcode-detail-lookup/actions/workflows/node.js.yml)
 
 ![Line Coverage](./badges/badge-lines.svg)
 ![Statement Coverage](./badges/badge-statements.svg)
@@ -15,16 +15,16 @@ The database is originally derived from the 2024 free-tier list provided by Simp
 
 ## Installation
 
-Install zipcode-lookup as a dependency in your project.
+Install zipcode-detail-lookup as a dependency in your project.
 
 ```sh
-npm install zipcode-lookup --save
+npm install zipcode-detail-lookup --save
 ```
 
 After, import it into your code at the top of your project
 
 ```ts
-import zdl from 'zipcode-lookup';
+import { zip, searchBy, random } from 'zipcode-detail-lookup';
 ```
 
 ## Usage
