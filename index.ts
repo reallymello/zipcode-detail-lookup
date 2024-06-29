@@ -4,13 +4,16 @@ import { zipCodes } from './zip-source-files/us-zip-codes';
 import _ from 'lodash';
 var csv = require('csvtojson');
 import fs from 'fs';
+import ZipCodeMapper from './models/ZipCodeMapper';
 
 function writeCsvToTsArray(sourceCsv = './zip-source-files/uszips.csv') {
   csv()
     .fromFile(sourceCsv)
     .then(function (jsonArrayObj: any) {
       // console.log(jsonArrayObj);
-      const zipCodeArray = jsonArrayObj.map((zip: any) => new ZipCode(zip));
+      const zipCodeArray = jsonArrayObj.map(
+        (zip: any) => new ZipCodeMapper(zip)
+      );
 
       fs.writeFileSync(
         './us-zip-codes1.ts',
@@ -23,22 +26,22 @@ export function zip(zipCode: string) {
   const result = zipCodes.find((zip) => zip.zip === zipCode);
 
   if (result) {
-    return result;
+    return new ZipCode(result);
   } else {
     return null;
   }
 }
 
-export function random() {
+export function random(): ZipCode {
   const rZip = zipCodes[Math.floor(Math.random() * zipCodes.length)];
-  return rZip;
+  return new ZipCode(rZip);
 }
 
 export function searchBy({ ...searchOptions }: ISearchParams) {
   const populationComparisonOperator =
     searchOptions.populationOperator ?? searchOptions.populationOperator;
 
-  return zipCodes.filter((zip) => {
+  const filteredArray = zipCodes.filter((zip) => {
     let searchObject: ZipCode = { ...zip, ...searchOptions };
     let objectEquivalence = _.isEqual(
       _.omit(zip, ['populationOperator', 'population']),
@@ -64,8 +67,10 @@ export function searchBy({ ...searchOptions }: ISearchParams) {
         return objectEquivalence && zip.population < searchOptions.population;
       }
       if (populationComparisonOperator === '=') {
-        return objectEquivalence && (zip.population = searchOptions.population);
+        return objectEquivalence && zip.population === searchOptions.population;
       }
     }
   });
+
+  return filteredArray.map((zip: ZipCode) => new ZipCode(zip));
 }
