@@ -24,7 +24,7 @@ npm install zipcode-lookup --save
 After, import it into your code at the top of your project
 
 ```ts
-import zcl from 'zipcode-lookup';
+import zdl from 'zipcode-lookup';
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ Zip Code Lookup provides 3 functions; zip, random, and searchBy. zip and random 
 ### zip(zipCode: string)
 
 ```ts
-const fll = zcl.zip(33316); // For returning an object for the 33316 Ft. Lauderdale zip code.
+const fll = zdl.zip(33316); // For returning an object for the 33316 Ft. Lauderdale zip code.
 console.log(fll.state); // Florida
 console.log(fll.stateAbbreviation); // FL
 console.log(fll.county); // Broward
@@ -46,7 +46,7 @@ console.log(fll.city); // Fort Lauderdale
 This will return a random zip code from the data set and will include all the properties as mentioned in the previous example (state, city, county, demographics, location, etc.)
 
 ```ts
-const randomZip = zcl.random();
+const randomZip = zdl.random();
 
 console.log(randomZip.zip); // Random zip code e.g. 11122
 ```
@@ -57,7 +57,7 @@ This method will let you search for any optional combination of criteria involvi
 
 ```ts
 // To return an array of results matching the state abbreviation FL with population greather than 27000.
-const searchResults = zcl.searchBy({
+const searchResults = zdl.searchBy({
   stateAbbreviation: 'FL',
   population: 27000,
   populationOperator: '>',
