@@ -1,0 +1,34 @@
+{
+  "name": "zipcode-lookup",
+  "version": "1.0.0",
+  "description": "Given a US Zip Code, this program returns the associated State, County, City, and other useful information.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "test",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reallymello/zipcode-lookup.git"
+  },
+  "keywords": [
+    "zipcode",
+    "county",
+    "lookup",
+    "state"
+  ],
+  "author": "David Mello (http://www.davidmello.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reallymello/zipcode-lookup/issues"
+  },
+  "homepage": "https://github.com/reallymello/zipcode-lookup#readme",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}
