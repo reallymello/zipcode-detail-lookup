@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
-import { random, searchBy } from './index';
+import { random, searchBy, zip } from './index';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
-import { ISearchParams } from './models/ISearchParams';
+import { ISearchParams } from './types/ISearchParams';
 
 describe('ZipCodeLookup', () => {
   describe('random()', () => {
@@ -15,6 +15,40 @@ describe('ZipCodeLookup', () => {
     test('will return a single element with expected structure', () => {
       let rZip = random();
       expect(rZip).toBeInstanceOf(ZipCode);
+    });
+  });
+  describe('zip()', () => {
+    test('will return the specific zip code object', () => {
+      let result = zip('10017');
+
+      expect(result).toBeInstanceOf(ZipCode);
+      expect(result?.zip).toBeDefined();
+      expect(result?.zip).toEqual('10017');
+      expect(result).toEqual({
+        city: 'New York',
+        county_fips: 36061,
+        county_fips_all: '36061',
+        county: 'New York',
+        county_names_all: 'New York',
+        county_weights: '{"36061": 100}',
+        density: 18775.3,
+        imprecise: false,
+        latitude: 40.75235,
+        longitude: -73.9726,
+        militaryZip: false,
+        timezone: 'America/New_York',
+        population: 14486,
+        parent_zcta: '',
+        zcta: true,
+        stateAbbreviation: 'NY',
+        stateName: 'New York',
+        zip: '10017',
+      });
+    });
+    test('will return null if zip was not found', () => {
+      let result = zip('nope');
+
+      expect(result).toBeNull();
     });
   });
   describe('searchBy()', () => {

@@ -1,4 +1,4 @@
-import { ISearchParams } from './models/ISearchParams';
+import { ISearchParams } from './types/ISearchParams';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
 import _ from 'lodash';
@@ -6,21 +6,21 @@ var csv = require('csvtojson');
 import fs from 'fs';
 import ZipCodeMapper from './models/ZipCodeMapper';
 
-function writeCsvToTsArray(sourceCsv = './zip-source-files/uszips.csv') {
-  csv()
-    .fromFile(sourceCsv)
-    .then(function (jsonArrayObj: any) {
-      // console.log(jsonArrayObj);
-      const zipCodeArray = jsonArrayObj.map(
-        (zip: any) => new ZipCodeMapper(zip)
-      );
+// function writeCsvToTsArray(
+//   sourceCsv = './zip-source-files/uszips.csv',
+//   outfile = './us-zip-codes1.ts'
+// ) {
+//   csv()
+//     .fromFile(sourceCsv)
+//     .then(function (jsonArrayObj: any) {
+//       // console.log(jsonArrayObj);
+//       const zipCodeArray = jsonArrayObj.map(
+//         (zip: any) => new ZipCodeMapper(zip)
+//       );
 
-      fs.writeFileSync(
-        './us-zip-codes1.ts',
-        JSON.stringify(zipCodeArray, null, 2)
-      );
-    });
-}
+//       fs.writeFileSync(outfile, JSON.stringify(zipCodeArray, null, 2));
+//     });
+// }
 
 export function zip(zipCode: string) {
   const result = zipCodes.find((zip) => zip.zip === zipCode);
