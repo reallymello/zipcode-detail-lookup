@@ -1,6 +1,6 @@
 {
   "name": "zipcode-detail-lookup",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Given a US Zip Code, this program returns the associated State, County, City, and other useful information.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
