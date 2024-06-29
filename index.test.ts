@@ -2,6 +2,7 @@ import { describe, expect, test } from '@jest/globals';
 import { random, searchBy } from './index';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
+import { ISearchParams } from './models/ISearchParams';
 
 describe('ZipCodeLookup', () => {
   describe('random()', () => {
@@ -18,7 +19,11 @@ describe('ZipCodeLookup', () => {
   });
   describe('searchBy()', () => {
     test('should return more than 1 result for Miami, FL', () => {
-      let searchResult = searchBy({ city: 'Miami', stateAbbreviation: 'FL' });
+      let searchParams: ISearchParams = {
+        city: 'Miami',
+        stateAbbreviation: 'FL',
+      };
+      let searchResult = searchBy(searchParams);
 
       expect(searchResult.length).toBeGreaterThan(1);
     });
@@ -57,6 +62,14 @@ describe('ZipCodeLookup', () => {
         city: 'Huntington',
       });
       expect(result).toHaveLength(1);
+      expect(result[0].city).toEqual('Huntington');
+    });
+    test('Will return results when population operator specified but not population value', () => {
+      let result = searchBy({ populationOperator: '=', county: 'St. Thomas' });
+      expect(result.length).toBeGreaterThan(0);
+      expect(result[0].population).toBeNull();
+      expect(result[0].county).toEqual('St. Thomas');
+      expect(result[0].stateName).toEqual('Virgin Islands');
     });
   });
 });
