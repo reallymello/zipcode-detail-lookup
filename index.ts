@@ -1,5 +1,8 @@
+import { ISearchParams } from './models/ISearchParams';
 import ZipCode from './models/ZipCode';
-import zipCodes from './zip-source-files/us-zip-codes';
+import { zipCodes } from './zip-source-files/us-zip-codes';
+import _ from 'lodash';
+
 // var csv = require('csvtojson');
 // import fs from 'fs';
 
@@ -20,72 +23,75 @@ import zipCodes from './zip-source-files/us-zip-codes';
 //     );
 //   });
 
-// const result = zipCodes.filter((zip) => {
-//   if (zip.zip === '33071') {
-//     return zip;
-//   }
-// });
+// csv()
+//   .fromFile('./zip-source-files/uszips.csv')
+//   .then(function (jsonArrayObj: any) {
+//     //when parse finished, result will be emitted here.
+//     console.log(jsonArrayObj);
+//     const zipCodeArray = jsonArrayObj.map((zip: any) => new ZipCode(zip));
 
-// const myZip = new ZipCode(result[0]);
-// myZip.population = 3;
-// myZip.ci
+//     fs.writeFileSync(
+//       './us-zip-codes1.ts',
+//       JSON.stringify(zipCodeArray, null, 2)
+//     );
+//   });
 
-// console.log(myZip);
+export function zip(zipCode: string) {
+  const result = zipCodes.find((zip) => zip.zip === zipCode);
 
-export const lookup = () => {
-  let filteredZips = zipCodes;
+  if (result) {
+    return result;
+  } else {
+    return null;
+  }
+}
 
-  const api = {
-    result() {
-      return filteredZips.map((zip) => new ZipCode(zip));
-    },
-    random() {
-      const rZip = new ZipCode(
-        filteredZips[Math.floor(Math.random() * zipCodes.length)]
-      );
-      return rZip;
-    },
-    zip(zipCode: string) {
-      const result = zipCodes.find((zip) => zip.zip === zipCode);
+export function random() {
+  const rZip = zipCodes[Math.floor(Math.random() * zipCodes.length)];
+  return rZip;
+}
 
-      if (result) {
-        return new ZipCode(result);
-      } else {
-        return null;
+export function searchBy({ ...searchOptions }: ISearchParams) {
+  const populationComparisonOperator =
+    searchOptions.populationOperator ?? searchOptions.populationOperator;
+
+  return zipCodes.filter((zip) => {
+    let searchObject: ZipCode = { ...zip, ...searchOptions };
+    let objectEquivalence = _.isEqual(
+      _.omit(zip, ['populationOperator', 'population']),
+      _.omit(searchObject, ['populationOperator', 'population'])
+    );
+
+    // If not equivalent or there is no comparison operator immediately return result
+    if (!objectEquivalence || !populationComparisonOperator) {
+      return objectEquivalence;
+    } else {
+      //If both the record and the search population are null return a match, true
+      if (!zip.population && !searchObject.population) {
+        return objectEquivalence && true;
       }
-    },
-    byCity(city: string) {
-      filteredZips = filteredZips.filter(
-        (zip) => zip.city.toLowerCase() === city.toLowerCase()
-      );
-      return api;
-    },
-    byStateName(stateName: string) {
-      filteredZips = filteredZips.filter(
-        (zip) => zip.state_name.toLowerCase() === stateName.toLowerCase()
-      );
-      return api;
-    },
-    byStateAbbreviation(state: string) {
-      filteredZips = filteredZips.filter(
-        (zip) => zip.state_id.toLowerCase() === state.toLowerCase()
-      );
-      return api;
-    },
-    byCounty(county: string) {
-      filteredZips = filteredZips.filter(
-        (zip) => zip.county_name.toLowerCase() === county.toLowerCase()
-      );
-      return api;
-    },
-  };
+      // If the population of either object is null, return false
+      if (!zip.population || !searchOptions.population) {
+        return false;
+      }
+      if (populationComparisonOperator === '>') {
+        return objectEquivalence && zip.population > searchOptions.population;
+      }
+      if (populationComparisonOperator === '<') {
+        return objectEquivalence && zip.population < searchOptions.population;
+      }
+      if (populationComparisonOperator === '=') {
+        return objectEquivalence && (zip.population = searchOptions.population);
+      }
+    }
+  });
+}
 
-  return api;
-};
-
-// console.log(lookup('33071'));
-
-console.log(
-  'chain',
-  lookup().byStateAbbreviation('FL').byCity('Coral Springs').result()
-);
+// console.log(
+//   searchBy({
+//     city: 'Coral Springs',
+//     county: 'Broward',
+//     population: 60000,
+//     populationOperator: '>',
+//   })
+// );
