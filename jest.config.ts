@@ -23,7 +23,7 @@ const config: Config = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['<rootDir>/index.ts', '<rootDir>/models/*'],
+  collectCoverageFrom: ['<rootDir>/src/index.ts', '<rootDir>/src/models/*'],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -35,13 +35,7 @@ const config: Config = {
   coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: [
-    "json-summary",
-    "json",
-    "text",
-    "lcov",
-    "clover"
-  ],
+  coverageReporters: ['json-summary', 'json', 'text', 'lcov', 'clover'],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -95,8 +89,8 @@ const config: Config = {
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   modulePathIgnorePatterns: [
     '<rootDir>/dist',
-    '<rootDir>/zip-source-files',
-    '<rootDir>/types',
+    '<rootDir>/src/zip-source-files',
+    '<rootDir>/src/types',
   ],
 
   // Activates notifications for test results

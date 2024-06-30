@@ -2,11 +2,15 @@
   "name": "zipcode-detail-lookup",
   "version": "1.0.3",
   "description": "Given a US Zip Code, this program returns the associated State, County, City, and other useful information.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest",
-    "build": "rimraf ./dist && tsc",
+    "build": "rimraf ./dist && tsc && tsup",
     "test:coverage": "npm test -- --coverage",
     "test:badges": "npm run test:coverage && jest-coverage-badges"
   },
@@ -34,6 +38,7 @@
     "@types/node": "^20.14.9",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.5",
+    "tsup": "^8.1.0",
     "typescript": "^5.5.2"
   },
   "dependencies": {
