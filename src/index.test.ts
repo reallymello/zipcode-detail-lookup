@@ -11,6 +11,7 @@ describe('ZipCodeLookup', () => {
       let r2 = randomZip();
 
       expect(r1).not.toEqual(r2);
+      expect(r1.zip).toHaveLength(5);
     });
     test('will return a single element with expected structure', () => {
       let rZip = randomZip();

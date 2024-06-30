@@ -7,3 +7,5 @@ export interface ISearchParams {
   population?: number;
   populationOperator?: '<' | '>' | '=';
 }
+
+export type ISearchParamsKeys = keyof ISearchParams;

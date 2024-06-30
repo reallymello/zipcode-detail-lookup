@@ -1,4 +1,4 @@
-import { ISearchParams } from './types/ISearchParams';
+import { ISearchParams, ISearchParamsKeys } from './types/ISearchParams';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
 import _ from 'lodash';
@@ -53,22 +53,17 @@ export function randomZip(): ZipCode {
  * @example .searchBy(stateAbbreviation: 'FL', county: 'Broward', population: 20000, populationOperator: '<')
  */
 export function lookupZipsWith({ ...searchOptions }: ISearchParams) {
-  const populationComparisonOperator =
-    searchOptions.populationOperator ?? searchOptions.populationOperator;
+  const populationComparisonOperator = searchOptions.populationOperator;
 
   const filteredArray = zipCodes.filter((zip) => {
-    let searchObject: ZipCode = { ...zip, ...searchOptions };
-    let objectEquivalence = _.isEqual(
-      _.omit(zip, ['populationOperator', 'population']),
-      _.omit(searchObject, ['populationOperator', 'population'])
-    );
+    let objectEquivalence = isMatchingSearchCriteria(zip, searchOptions);
 
     // If not equivalent or there is no comparison operator immediately return result
     if (!objectEquivalence || !populationComparisonOperator) {
       return objectEquivalence;
     } else {
       //If both the record and the search population are null return a match, true
-      if (!zip.population && !searchObject.population) {
+      if (!zip.population && !searchOptions.population) {
         return objectEquivalence && true;
       }
       // If the population of either object is null, return false
@@ -88,4 +83,17 @@ export function lookupZipsWith({ ...searchOptions }: ISearchParams) {
   });
 
   return filteredArray.map((zip: ZipCode) => new ZipCode(zip));
+}
+
+function isMatchingSearchCriteria(
+  zipCode: ZipCode,
+  searchOptions: ISearchParams
+): boolean {
+  const keys = Object.keys(searchOptions) as ISearchParamsKeys[];
+
+  for (const key of keys) {
+    if (key === 'population' || key === 'populationOperator') continue;
+    if (zipCode[key] !== searchOptions[key]) return false;
+  }
+  return true;
 }
