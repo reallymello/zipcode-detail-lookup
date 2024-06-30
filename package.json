@@ -22,7 +22,11 @@
     "zipcode",
     "county",
     "lookup",
-    "state"
+    "state",
+    "test tools",
+    "quality assurance",
+    "software testing",
+    "utility"
   ],
   "author": "David Mello (http://www.davidmello.com)",
   "license": "MIT",
