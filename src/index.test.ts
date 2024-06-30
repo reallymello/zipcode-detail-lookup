@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { random, searchBy, zip } from './index';
+import { randomZip, lookupZipsWith, lookupZip } from './index';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
 import { ISearchParams } from './types/ISearchParams';
@@ -7,19 +7,19 @@ import { ISearchParams } from './types/ISearchParams';
 describe('ZipCodeLookup', () => {
   describe('random()', () => {
     test('should not normally return the same zip', () => {
-      let r1 = random();
-      let r2 = random();
+      let r1 = randomZip();
+      let r2 = randomZip();
 
       expect(r1).not.toEqual(r2);
     });
     test('will return a single element with expected structure', () => {
-      let rZip = random();
+      let rZip = randomZip();
       expect(rZip).toBeInstanceOf(ZipCode);
     });
   });
   describe('zip()', () => {
     test('will return the specific zip code object', () => {
-      let result = zip('10017');
+      let result = lookupZip('10017');
 
       expect(result).toBeInstanceOf(ZipCode);
       expect(result?.zip).toBeDefined();
@@ -46,7 +46,7 @@ describe('ZipCodeLookup', () => {
       });
     });
     test('will return null if zip was not found', () => {
-      let result = zip('nope');
+      let result = lookupZip('nope');
 
       expect(result).toBeNull();
     });
@@ -57,12 +57,12 @@ describe('ZipCodeLookup', () => {
         city: 'Miami',
         stateAbbreviation: 'FL',
       };
-      let searchResult = searchBy(searchParams);
+      let searchResult = lookupZipsWith(searchParams);
 
       expect(searchResult.length).toBeGreaterThan(1);
     });
     test('should return 0 results for a population number larger than world population', () => {
-      let results = searchBy({
+      let results = lookupZipsWith({
         population: 1000000000000,
         populationOperator: '>',
       });
@@ -70,7 +70,7 @@ describe('ZipCodeLookup', () => {
       expect(results).toHaveLength(0);
     });
     test('should return all non-null population results when searching populations less than 1 trillion people', () => {
-      let results = searchBy({
+      let results = lookupZipsWith({
         population: 1000000000000,
         populationOperator: '<',
       });
@@ -79,18 +79,21 @@ describe('ZipCodeLookup', () => {
       expect(results).toHaveLength(allZipCodesLength);
     });
     test('will return results with null population', () => {
-      let result = searchBy({
+      let result = lookupZipsWith({
         stateName: 'Virgin Islands',
       });
 
       expect(result.length).toBeGreaterThan(0);
     });
     test('will return results with the exact equal population', () => {
-      let result = searchBy({ population: 2801, populationOperator: '=' });
+      let result = lookupZipsWith({
+        population: 2801,
+        populationOperator: '=',
+      });
       expect(result).toHaveLength(4);
     });
     test('will return results with the exact equal population and city', () => {
-      let result = searchBy({
+      let result = lookupZipsWith({
         population: 2801,
         populationOperator: '=',
         city: 'Huntington',
@@ -99,7 +102,10 @@ describe('ZipCodeLookup', () => {
       expect(result[0].city).toEqual('Huntington');
     });
     test('Will return results when population operator specified but not population value', () => {
-      let result = searchBy({ populationOperator: '=', county: 'St. Thomas' });
+      let result = lookupZipsWith({
+        populationOperator: '=',
+        county: 'St. Thomas',
+      });
       expect(result.length).toBeGreaterThan(0);
       expect(result[0].population).toBeNull();
       expect(result[0].county).toEqual('St. Thomas');
