@@ -77,3 +77,30 @@ interface ISearchParams {
   populationOperator?: '<' | '>' | '=';
 }
 ```
+
+## Available Properties
+
+The following demographic information is exposed in the ZipCode result objects returned singly or in array form from the searchBy method.
+
+```ts
+{
+  'zip': string;
+  'latitude': number;
+  'longitude': number;
+  'city': string;
+  'stateName': string;
+  'stateAbbreviation': string;
+  'zcta': boolean;
+  'parent_zcta': string;
+  'population': number | null;
+  'density': number | null;
+  'county_fips': number;
+  'county': string;
+  'county_weights': any;
+  'county_names_all': string;
+  'county_fips_all': string;
+  'imprecise': boolean;
+  'militaryZip': boolean;
+  'timezone': string;
+}
+```
