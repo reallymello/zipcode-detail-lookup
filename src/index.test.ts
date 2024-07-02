@@ -1,5 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
-import { randomZip, lookupZipsWith, lookupZip } from './index';
+import {
+  randomZip,
+  lookupZipsWith,
+  lookupZip,
+  distanceBetweenZips,
+} from './index';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
 import { ISearchParams } from './types/ISearchParams';
@@ -111,6 +116,52 @@ describe('ZipCodeLookup', () => {
       expect(result[0].population).toBeNull();
       expect(result[0].county).toEqual('St. Thomas');
       expect(result[0].stateName).toEqual('Virgin Islands');
+    });
+  });
+
+  describe('distanceBetweenZips', () => {
+    test('will calculate the distance in miles from New York to LA', () => {
+      const newYork = '10001';
+      const losAngeles = '90001';
+
+      const distance = distanceBetweenZips(newYork, losAngeles, true);
+
+      expect(distance).toEqual(2448.350696991183);
+    });
+    test('will calculate the distance in kilometers from New York to LA', () => {
+      const newYork = '10001';
+      const losAngeles = '90001';
+
+      const distance = distanceBetweenZips(newYork, losAngeles, false);
+
+      expect(distance).toEqual(3940.239723114183);
+    });
+    test('will return null if missing a latitude or longitude', () => {
+      const nonExistingZip = '-1';
+      const losAngeles = '90001';
+
+      let distance = distanceBetweenZips(nonExistingZip, losAngeles, false);
+      expect(distance).toEqual(null);
+      distance = distanceBetweenZips(losAngeles, nonExistingZip, false);
+      expect(distance).toEqual(null);
+    });
+    test('inverse should return same distance', () => {
+      const newYork = '10001';
+      const losAngeles = '90001';
+
+      // That d1 is calculated correctly is covered in another test
+      const d1 = distanceBetweenZips(newYork, losAngeles, false);
+      const d2 = distanceBetweenZips(losAngeles, newYork, false);
+
+      expect(d1).toEqual(d2);
+    });
+    test('traveling in place should equal 0 distance', () => {
+      const losAngeles = '90001';
+
+      // That d1 is calculated correctly is covered in another test
+      const distance = distanceBetweenZips(losAngeles, losAngeles);
+
+      expect(distance).toEqual(0);
     });
   });
 });

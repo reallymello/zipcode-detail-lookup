@@ -1,5 +1,5 @@
 module.exports = [
   {
-      ignores: ['./src/zip-source-files/*']
-  }
+    ignores: ['./src/zip-source-files/*'],
+  },
 ];

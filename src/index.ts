@@ -96,3 +96,73 @@ function isMatchingSearchCriteria(
   }
   return true;
 }
+
+/**
+ * Returns the approximate distance between two zip codes using the Haversine formula {@link https://en.wikipedia.org/wiki/Haversine_formula} to account for spherical nature of the Earth.
+ * @param firstZipCode Point A
+ * @param secondZipCode Point B
+ * @param distanceInMiles Uses miles if true, else kilometers
+ * @returns Distance in miles or kilometers between two zip codes
+ */
+export function distanceBetweenZips(
+  firstZipCode: string,
+  secondZipCode: string,
+  distanceInMiles = true
+): number | null {
+  const zip1 = lookupZip(firstZipCode);
+  const zip2 = lookupZip(secondZipCode);
+
+  if (!zip1 || !zip2) {
+    return null;
+  } else {
+    return returnDistanceBetweenPoints(
+      zip1.latitude,
+      zip1.longitude,
+      zip2.latitude,
+      zip2.longitude,
+      distanceInMiles
+    );
+  }
+}
+
+/**
+ * Adopted formula for calculating distances between latitude and longitude from {@link https://simplemaps.com/resources/location-distance}
+ * Copyright 2016, Chris Youderian, SimpleMaps, http://simplemaps.com/resources/location-distance
+ * Released under MIT license - https://opensource.org/licenses/MIT
+ * @param lat1
+ * @param lng1
+ * @param lat2
+ * @param lng2
+ * @param returnInMiles
+ * @returns Approximate distance in miles or kilometers based on returnInMiles setting
+ */
+function returnDistanceBetweenPoints(
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number,
+  returnInMiles = true
+) {
+  function deg2rad(deg: number) {
+    return deg * (Math.PI / 180);
+  }
+  function square(x: number) {
+    return Math.pow(x, 2);
+  }
+  const radiusOfEarthInKm = 6371; // radius of the earth in km
+  lat1 = deg2rad(lat1);
+  lat2 = deg2rad(lat2);
+  var lat_dif = lat2 - lat1;
+  var lng_dif = deg2rad(lng2 - lng1);
+  var a =
+    square(Math.sin(lat_dif / 2)) +
+    Math.cos(lat1) * Math.cos(lat2) * square(Math.sin(lng_dif / 2));
+  var d = 2 * radiusOfEarthInKm * Math.asin(Math.sqrt(a));
+  if (returnInMiles) {
+    //return miles
+    return d * 0.621371;
+  } else {
+    //return km
+    return d;
+  }
+}
