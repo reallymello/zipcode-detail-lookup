@@ -85,7 +85,7 @@ interface ISearchParams {
 }
 ```
 
-### distanceBetweenZips(firstZipCode: string, secondZipCode: string, distanceInMiles = true): number | null
+### distanceBetweenZips(firstZipCode: string, secondZipCode: string, distanceInMiles = true)
 
 Provided two zip codes, distanceBetweenZips will return the direct distance between their associated latitude and longitude taking into account the approximate curvature of the Earth.
 
@@ -93,8 +93,8 @@ Provided two zip codes, distanceBetweenZips will return the direct distance betw
 const newYork = '10001';
 const losAngeles = '90001';
 
-const distanceInMiles = distanceBetweenZips(newYork, losAngeles, true);
-const distanceInKilometers = distanceBetweenZips(newYork, losAngeles, false);
+const distanceInMiles = distanceBetweenZips(newYork, losAngeles, true); // --> 2448.350696991183
+const distanceInKilometers = distanceBetweenZips(newYork, losAngeles, false); // --> 3940.239723114183
 ```
 
 ## Available Properties
