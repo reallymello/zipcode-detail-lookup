@@ -11,7 +11,7 @@ Given a US zip code, provided or random, this program returns the associated Sta
 
 The data source contains US states and territories.
 
-The database is originally derived from the 2024 free-tier list provided by SimpleMaps.
+The database is originally derived from the 2024 free-tier list provided by SimpleMaps <https://simplemaps.com/data/us-zips>.
 
 ## Installation
 
