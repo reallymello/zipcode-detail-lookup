@@ -7,7 +7,7 @@
 ![Function Coverage](./badges/badge-functions.svg)
 ![Branch Coverage](./badges/badge-branches.svg)
 
-Given a US zip code, provided or random, this program returns the associated State, County, City, and other useful information; latitude, longitude, density, population, military designation, timezone. Also, provides ability to search for zip codes using population size, state, county, city, latitude, and longitude.
+Given a US zip code, provided or random, this program returns the associated State, County, City, and other useful information; latitude, longitude, density, population, military designation, timezone. Also, provides ability to search for zip codes using population size, state, county, city, latitude, and longitude. Last, the ability is provided to calculate the miles or kilometers between two zip codes.
 
 The data source contains US states and territories.
 
@@ -26,12 +26,17 @@ npm install zipcode-detail-lookup --save
 After, import it into your code at the top of your project
 
 ```ts
-import { lookupZip, lookupZipsWith, randomZip } from 'zipcode-detail-lookup';
+import {
+  lookupZip,
+  lookupZipsWith,
+  randomZip,
+  distanceBetweenZips,
+} from 'zipcode-detail-lookup';
 ```
 
 ## Usage
 
-Zip Code Lookup provides 3 functions; lookupZip, randomZip, and searchBy. zip and random return a single zip code object result whereas searchBy will return an array of matches.
+Zip Code Lookup provides 3 functions; lookupZip, randomZip, searchBy, and distanceBetweenZips. zip and random return a single zip code object result whereas searchBy will return an array of matches. distanceBetweenZips returns the distance between two zipes codes in miles or kilometers using their associated latitude and longitude.
 
 ### lookupZip(zipCode: string)
 
@@ -80,6 +85,18 @@ interface ISearchParams {
 }
 ```
 
+### distanceBetweenZips(firstZipCode: string, secondZipCode: string, distanceInMiles = true): number | null
+
+Provided two zip codes, distanceBetweenZips will return the direct distance between their associated latitude and longitude taking into account the approximate curvature of the Earth.
+
+````ts
+const newYork = '10001';
+const losAngeles = '90001';
+
+const distanceInMiles = distanceBetweenZips(newYork, losAngeles, true);
+const distanceInKilometers = distanceBetweenZips(newYork, losAngeles, false);
+```
+
 ## Available Properties
 
 The following demographic information is exposed in the ZipCode result objects returned singly or in array form from the searchBy method.
@@ -105,4 +122,4 @@ The following demographic information is exposed in the ZipCode result objects r
   'militaryZip': boolean;
   'timezone': string;
 }
-```
+````
