@@ -89,7 +89,7 @@ interface ISearchParams {
 
 Provided two zip codes, distanceBetweenZips will return the direct distance between their associated latitude and longitude taking into account the approximate curvature of the Earth.
 
-````ts
+```ts
 const newYork = '10001';
 const losAngeles = '90001';
 
@@ -122,4 +122,4 @@ The following demographic information is exposed in the ZipCode result objects r
   'militaryZip': boolean;
   'timezone': string;
 }
-````
+```
