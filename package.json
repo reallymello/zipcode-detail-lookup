@@ -52,12 +52,11 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.7.1"
-  },
-  "dependencies": {
-    "csvtojson": "^2.0.10",
-    "eslint": "^8.23.1",
+    "prettier": "^2.7.1",
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
   }
 }
