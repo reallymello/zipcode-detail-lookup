@@ -1,9 +1,10 @@
 import { ISearchParams, ISearchParamsKeys } from './types/ISearchParams';
 import ZipCode from './models/ZipCode';
 import { zipCodes } from './zip-source-files/us-zip-codes';
-var csv = require('csvtojson');
-import fs from 'fs';
-import ZipCodeMapper from './models/ZipCodeMapper';
+
+// var csv = require('csvtojson');
+// import fs from 'fs';
+// import ZipCodeMapper from './models/ZipCodeMapper';
 
 // function writeCsvToTsArray(
 //   sourceCsv = './zip-source-files/uszips.csv',
