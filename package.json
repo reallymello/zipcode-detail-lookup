@@ -54,9 +54,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1",
     "rimraf": "^5.0.7",
-    "ts-node": "^10.9.2"
-  },
-  "dependencies": {
+    "ts-node": "^10.9.2",
     "csvtojson": "^2.0.10"
   }
 }
