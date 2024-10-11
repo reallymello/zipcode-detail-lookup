@@ -1,6 +1,6 @@
 {
   "name": "zipcode-detail-lookup",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Given a US Zip Code, this program returns the associated State, County, City, and other useful information. It also supports querying and returning broader location demographic information using fields like city, state, county, population size, and military designation.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
