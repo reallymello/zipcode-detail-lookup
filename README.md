@@ -42,7 +42,7 @@ Zip Code Lookup provides 3 functions; lookupZip, randomZip, searchBy, and distan
 
 ```ts
 const fll = lookupZip(33316); // For returning an object for the 33316 Ft. Lauderdale zip code.
-console.log(fll.state); // Florida
+console.log(fll.stateName); // Florida
 console.log(fll.stateAbbreviation); // FL
 console.log(fll.county); // Broward
 console.log(fll.city); // Fort Lauderdale
