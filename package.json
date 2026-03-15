@@ -35,7 +35,7 @@
   "bugs": {
     "url": "https://github.com/reallymello/zipcode-lookup/issues"
   },
-  "homepage": "https://github.com/reallymello/zipcode-lookup#readme",
+  "homepage": "https://www.davidmello.com/open-source/zipcode-detail-lookup",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@testdeck/jest": "^0.3.3",
