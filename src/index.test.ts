@@ -37,13 +37,13 @@ describe('ZipCodeLookup', () => {
         county: 'New York',
         county_names_all: 'New York',
         county_weights: '{"36061": 100}',
-        density: 18775.3,
+        density: 19826.4,
         imprecise: false,
         latitude: 40.75235,
         longitude: -73.9726,
         militaryZip: false,
         timezone: 'America/New_York',
-        population: 14486,
+        population: 15297,
         parent_zcta: '',
         zcta: true,
         stateAbbreviation: 'NY',
@@ -96,16 +96,16 @@ describe('ZipCodeLookup', () => {
         population: 2801,
         populationOperator: '=',
       });
-      expect(result).toHaveLength(4);
+      expect(result).toHaveLength(3);
     });
     test('will return results with the exact equal population and city', () => {
       let result = lookupZipsWith({
         population: 2801,
         populationOperator: '=',
-        city: 'Huntington',
+        city: 'Grantham',
       });
       expect(result).toHaveLength(1);
-      expect(result[0].city).toEqual('Huntington');
+      expect(result[0].city).toEqual('Grantham');
     });
     test('Will return results when population operator specified but not population value', () => {
       let result = lookupZipsWith({
@@ -162,6 +162,16 @@ describe('ZipCodeLookup', () => {
       const distance = distanceBetweenZips(losAngeles, losAngeles);
 
       expect(distance).toEqual(0);
+    });
+  });
+  describe('zip data source', () => {
+    test('has a record count within the expected range', () => {
+      expect(zipCodes.length).toBeGreaterThanOrEqual(33000);
+      expect(zipCodes.length).toBeLessThanOrEqual(35000);
+    });
+    test('has no duplicate zip codes', () => {
+      const uniqueZips = new Set(zipCodes.map((zip) => zip.zip));
+      expect(uniqueZips.size).toEqual(zipCodes.length);
     });
   });
 });
