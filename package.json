@@ -11,6 +11,7 @@
   "scripts": {
     "test": "jest --runInBand",
     "build": "rimraf ./dist && tsc && tsup",
+    "prepublishOnly": "npm run build && npm test",
     "test:coverage": "npm test -- --coverage",
     "test:badges": "npm run test:coverage && jest-coverage-badges",
     "lint": "eslint .",
