@@ -13,7 +13,7 @@ The data source contains US states and territories.
 
 <a href="https://www.buymeacoffee.com/reallymello" alt="buy me a coffee" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="30"></a>
 
-The database is originally derived from the 2024 free-tier list provided by SimpleMaps <https://simplemaps.com/data/us-zips>.
+The database is originally derived from the 2026 free-tier list provided by SimpleMaps <https://simplemaps.com/data/us-zips>.
 
 ## Installation
 
